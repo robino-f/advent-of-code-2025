@@ -1,41 +1,14 @@
 import java.io.File
 
 class Day3(val batteries: List<String>) {
-    fun solvePart1(): Int {
-        var maximumJoltage = 0
-        for (battery in batteries) {
-            var joltage = ""
-            var max = '0'
-            var maxIndex = 0
-            for (i in 0..battery.length - 2) {
-                if (battery[i] > max) {
-                    max = battery[i]
-                    maxIndex = i
-                }
-            }
-
-            joltage += max
-            max = '0'
-            for (i in maxIndex + 1..battery.length - 1) {
-                if (battery[i] > max) {
-                    max = battery[i]
-                }
-            }
-            joltage += max
-            maximumJoltage += joltage.toInt()
-        }
-        return maximumJoltage
-    }
-
-    fun solvePart2(): Long {
+    fun solvePart1(numberOfDigits: Int = 2): Long {
         var maximumJoltage = 0.toLong()
-        val numberOfDigits = 12
         for (battery in batteries) {
             var joltage = ""
             var max = '0'
             var maxIndex = 0
 
-            for (shift in 0..numberOfDigits - 1) {
+            for (shift in 0..<numberOfDigits) {
                 for (i in maxIndex..(battery.length - numberOfDigits + shift)) {
                     if (battery[i] > max) {
                         max = battery[i]
@@ -49,6 +22,10 @@ class Day3(val batteries: List<String>) {
             maximumJoltage += joltage.toLong()
         }
         return maximumJoltage
+    }
+
+    fun solvePart2(): Long {
+        return solvePart1(12)
     }
 }
 
