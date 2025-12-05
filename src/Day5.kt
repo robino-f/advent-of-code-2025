@@ -6,18 +6,18 @@ class Day5(val ranges: MutableList<MutableList<Long>>, val ingredients: List<Lon
     }
 
     fun solvePart2(): Long {
-        ranges.sortedBy { it[0] }
+        val sorted = ranges.map { it[0] to it[1] }.sortedBy { it.first }
+        val merged = mutableListOf<Pair<Long, Long>>()
 
-        val merged = mutableListOf<List<Long>>()
-        for ((start, end) in ranges) {
+        for ((start, end) in sorted) {
             if (merged.isEmpty()) {
-                merged.add(listOf(start,end))
+                merged.add(start to end)
             } else {
                 val last = merged.last()
-                if (start <= last[1]) {
-                    merged[merged.size - 1] = listOf(last[0], maxOf(last[1], end))
+                if (start <= last.second) {
+                    merged[merged.size - 1] = last.first to maxOf(last.second, end)
                 } else {
-                    merged.add(listOf(start,end))
+                    merged.add(start to end)
                 }
             }
         }
